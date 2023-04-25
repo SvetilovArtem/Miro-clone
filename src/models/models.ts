@@ -7,3 +7,9 @@ export interface ITool {
     icon: ReactNode,
     element: string
 }
+export interface IOptions {
+    width: string
+    height: string
+    bgColor: string
+    deg: string
+  }

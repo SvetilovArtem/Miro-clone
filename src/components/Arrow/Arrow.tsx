@@ -1,13 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styles from './Arrow.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
-
-export interface IOptions {
-  width: string
-  height: string
-  bgColor: string
-  deg: string
-}
+import { IOptions } from '../../models/models'
 
 const Arrow = () => {
     const arrowRef = useRef<HTMLDivElement | null>(null)

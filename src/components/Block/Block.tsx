@@ -1,15 +1,10 @@
 import React, { useRef, useState } from 'react'
 import styles from './Block.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
+import { IOptions } from '../../models/models'
 
 interface IBlockProps {
   type?: string
-}
-export interface IOptions {
-  width: string
-  height: string
-  bgColor: string
-  deg: string
 }
 
 const Block = ({ type="square" }:IBlockProps) => {

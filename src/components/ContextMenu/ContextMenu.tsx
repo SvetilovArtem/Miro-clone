@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './ContextMenu.module.scss'
-import { IOptions } from '../Block/Block'
+import { IOptions } from '../../models/models'
 
 interface IContextMenuProps {
     setContextMenu: (e: boolean) => void
