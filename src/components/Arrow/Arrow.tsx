@@ -40,8 +40,8 @@ const Arrow = () => {
 
     if(!arrowRef.current?.clientWidth) return null
 
-    setPositionX(e.clientX)
-    setPositionY(e.clientY - 350) 
+    setPositionX(e.clientX - arrowRef.current.clientWidth / 2)
+    setPositionY(e.clientY - 200) 
     }
   return (
     <>

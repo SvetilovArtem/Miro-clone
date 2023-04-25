@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
-import styles from './Square.module.scss'
+import styles from './Block.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
 
-// interface ISquareProps {
-//   text?: string
-// }
+interface IBlockProps {
+  type?: string
+}
 export interface IOptions {
   width: string
   height: string
@@ -12,8 +12,8 @@ export interface IOptions {
   deg: string
 }
 
-const Square = () => {
-  const squareRef = useRef<HTMLDivElement | null>(null)
+const Block = ({ type="square" }:IBlockProps) => {
+  const blockRef = useRef<HTMLDivElement | null>(null)
   const [positionX, setPositionX] = useState(15)
   const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
   const [enter, setEnter] = useState(false)
@@ -24,8 +24,8 @@ const Square = () => {
   const [text, setText] = useState('')
 
   const initialOptions = {
-    width: '200px',
-    height: '80px',
+    width: '80',
+    height: '80',
     bgColor: '#fff',
     deg: ''
   }
@@ -37,16 +37,16 @@ const Square = () => {
   }
 
   const dragStart = () => {
-      if(!squareRef) return null 
+      if(!blockRef) return null 
     }
   const dragOver = (e:any) => {
     e.preventDefault()
   }
   const dragEnd = (e:any) => {
     e.preventDefault()  
-    if(!squareRef.current?.clientWidth) return null
-    setPositionX(e.pageX - squareRef.current?.clientWidth / 2)
-    setPositionY(e.pageY)  
+    if(!blockRef.current?.clientWidth) return null
+    setPositionX(e.pageX - blockRef.current?.clientWidth / 2)
+    setPositionY(e.pageY - blockRef.current?.clientHeight / 2)  
   }
   return (
     <>
@@ -59,13 +59,14 @@ const Square = () => {
           width: `${options.width}px`, 
           minHeight: `${options.height}px`,
           backgroundColor: options.bgColor,
-          transform: `rotate(${options.deg}deg)`
+          transform: `rotate(${options.deg}deg)`,
+          borderRadius: type==='circle' ? '50%' : ''
         }}
       draggable
       onDragStart={dragStart} 
       onDragOver={dragOver}
       onDragEnd={dragEnd}
-      ref={squareRef}
+      ref={blockRef}
       onDragEnter={()=>setEnter(true)}
       onDragLeave={()=>setEnter(false)}
       onDrop={()=>{}}
@@ -93,4 +94,4 @@ const Square = () => {
   )
 }
 
-export default Square
+export default Block

@@ -1,8 +1,8 @@
 import React from 'react'
 import Line from '../Line/Line'
-import Square from '../Square/Square'
 import TextElement from '../TextElement/TextElement'
 import Arrow from '../Arrow/Arrow'
+import Block from '../Block/Block'
 
 interface IElementProps {
     element: string
@@ -13,11 +13,13 @@ const ShemeElement = ({element}:IElementProps) => {
     case 'line':
         return <Line />
     case 'square':
-        return <Square />
+        return <Block />
     case 'text':
         return <TextElement />
     case 'arrow':
         return <Arrow />
+    case 'circle':
+        return <Block type="circle" />
     default:
         return null       
   }
