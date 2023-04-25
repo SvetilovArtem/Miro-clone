@@ -1,0 +1,21 @@
+.square {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    border: 2px solid #333;
+    position: relative;
+    padding: 5px 8px;
+
+    textarea {
+        width: 100%;
+    }
+    div {
+        max-width: 200px;
+        height: auto;
+    }
+}
+.lighter {
+    border: 3px solid red;
+}

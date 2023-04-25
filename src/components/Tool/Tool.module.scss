@@ -1,0 +1,14 @@
+.tool {
+    cursor: pointer;
+    border: 1px solid #333;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: #ededed;
+    }
+    &:active {
+        transform: scale(0.95);
+    }
+}
