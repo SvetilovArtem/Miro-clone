@@ -1,4 +1,4 @@
-import {AiOutlineMinus, AiOutlineArrowUp} from 'react-icons/ai'
+import {AiOutlineMinus, AiOutlineArrowUp, AiFillDelete} from 'react-icons/ai'
 import {BsCircle} from 'react-icons/bs'
 import {BiSquare, BiText} from 'react-icons/bi'
 import { ITool } from '../../models/models'
@@ -15,6 +15,7 @@ const Board = () => {
         {id: 3, name: 'Circle', order: 3, icon: <BsCircle />, element: 'circle'},
         {id: 4, name: 'Square', order: 4, icon: <BiSquare />, element: 'square'},
         {id: 5, name: 'Text', order: 5, icon: <BiText />, element: 'text'},
+        {id: 6, name: 'Delete', order: 6, icon: <AiFillDelete />, element: 'delete'},
     ]
 
     const addedElementsOnBoard = useSelector((state: RootState) => state.elementsReducer.addedElementsOnBoard)

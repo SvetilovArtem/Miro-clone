@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react'
 import styles from './ToolsPanel.module.scss'
 import { ITool } from '../../models/models'
 import Tool from '../Tool/Tool'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store/store'
-import { setAddedElementsOnBoard } from '../../store/slices/elementsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store/store'
+import { setAddedElementsOnBoard, setDeleteMode } from '../../store/slices/elementsSlice'
 
 interface IToolsPanelProps {
     tools: ITool[],
@@ -13,6 +13,7 @@ interface IToolsPanelProps {
 const ToolsPanel = ({ tools }:IToolsPanelProps) => {
 
   const dispatch:AppDispatch = useDispatch()
+  const deleteMode = useSelector((state:RootState) => state.elementsReducer.deleteMode)
 
   const toolsRef = useRef<HTMLUListElement | null>(null)
   const [positionX, setPositionX] = useState(15)
@@ -36,6 +37,10 @@ const ToolsPanel = ({ tools }:IToolsPanelProps) => {
 
   const onClickHandler = (tool:ITool) => {
     dispatch(setAddedElementsOnBoard(tool))
+    console.log(deleteMode)
+    if(tool.name==='Delete') {
+      dispatch(setDeleteMode(!deleteMode))
+    }
   }
 
   return (
@@ -49,7 +54,7 @@ const ToolsPanel = ({ tools }:IToolsPanelProps) => {
       style={{position: 'absolute', top: positionY, left: positionX}}
       ref={toolsRef}
       >
-          {tools.map(tool => <Tool tool={tool} key={tool.id} onClick={() => onClickHandler({...tool, id: Math.floor(Math.random()*100 + Number(Date()))})} />)}
+          {tools.map(tool => <Tool tool={tool} key={tool.id} deleteMode={deleteMode} onClick={() => onClickHandler({...tool, id: Math.floor(Math.random()*100 + Number(Date()))})} />)}
       </ul>}
     </>
   )
