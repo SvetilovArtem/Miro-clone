@@ -3,7 +3,12 @@ import styles from './Arrow.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import { IOptions } from '../../models/models'
 
-const Arrow = () => {
+interface IArrowProps {
+  id: number
+  deleteElement: (id: number) => void
+}
+
+const Arrow = ({ id, deleteElement }:IArrowProps) => {
     const arrowRef = useRef<HTMLDivElement | null>(null)
     const [positionX, setPositionX] = useState(15)
     const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
@@ -53,6 +58,7 @@ const Arrow = () => {
         onDragOver={dragOver}
         onDragEnd={dragEnd}
         ref={arrowRef}
+        onClick={() => deleteElement(id)}
     >
         <div 
           onContextMenu={e => {

@@ -3,9 +3,11 @@ import styles from './TextElement.module.scss'
 
 interface ITextElementProps {
     text?: string
+    id: number
+    deleteElement: (id: number) => void
 }
 
-const TextElement = ({text}:ITextElementProps) => {
+const TextElement = ({text, id, deleteElement}:ITextElementProps) => {
     const [typeMode, setTypeMode] = useState(false)
     const [value, setValue] = useState(text)
 
@@ -41,6 +43,7 @@ const TextElement = ({text}:ITextElementProps) => {
         onDragOver={dragOver}
         onDragEnd={dragEnd}
         ref={textElRef}
+        onClick={() => deleteElement(id)}
     >
         {
             typeMode ? 

@@ -25,7 +25,7 @@ const Board = () => {
         <ToolsPanel 
           tools={tools} 
         />
-        {addedElementsOnBoard.map(element => <ShemeElement element={element.element} key={element.id} />)}
+        {addedElementsOnBoard.map(element => <ShemeElement id={element.id} element={element.element} key={element.id} />)}
     </div>
   )
 }

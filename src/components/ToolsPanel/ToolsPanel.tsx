@@ -36,8 +36,9 @@ const ToolsPanel = ({ tools }:IToolsPanelProps) => {
   }
 
   const onClickHandler = (tool:ITool) => {
-    dispatch(setAddedElementsOnBoard(tool))
-    console.log(deleteMode)
+    if(tool.name !== 'Delete') {
+      dispatch(setAddedElementsOnBoard({...tool, id: Math.round(Math.random() * 100 + Number(new Date()))}))
+    }
     if(tool.name==='Delete') {
       dispatch(setDeleteMode(!deleteMode))
     }

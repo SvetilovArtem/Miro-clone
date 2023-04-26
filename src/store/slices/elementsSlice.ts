@@ -20,11 +20,18 @@ export const elementsSlice = createSlice({
     },
     setDeleteMode(state, action) {
       state.deleteMode = action.payload
+    },
+    deleteElementFromBoard(state, action) {
+      state.addedElementsOnBoard = state.addedElementsOnBoard.filter(el => el.id !== action.payload)
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setAddedElementsOnBoard, setDeleteMode } = elementsSlice.actions
+export const { 
+    setAddedElementsOnBoard, 
+    setDeleteMode, 
+    deleteElementFromBoard 
+} = elementsSlice.actions
 
 export default elementsSlice.reducer

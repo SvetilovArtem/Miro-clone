@@ -1,7 +1,12 @@
 import React, { useRef, useState } from 'react'
 import styles from './Line.module.scss'
 
-const Line = () => {
+interface ILineProps {
+  id: number
+  deleteElement: (id: number) => void
+}
+
+const Line = ({ id, deleteElement }:ILineProps) => {
     const lineRef = useRef<HTMLSpanElement | null>(null)
     const [positionX, setPositionX] = useState(15)
     const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
@@ -29,6 +34,7 @@ const Line = () => {
         onDragOver={dragOver}
         onDragEnd={dragEnd}
         ref={lineRef}
+        onClick={() => deleteElement(id)}
     ></span>
   )
 }

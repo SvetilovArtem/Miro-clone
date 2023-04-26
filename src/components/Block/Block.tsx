@@ -2,12 +2,16 @@ import React, { useRef, useState } from 'react'
 import styles from './Block.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import { IOptions } from '../../models/models'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/store'
 
 interface IBlockProps {
   type?: string
+  id: number
+  deleteElement: (id: number) => void
 }
 
-const Block = ({ type="square" }:IBlockProps) => {
+const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
   const blockRef = useRef<HTMLDivElement | null>(null)
   const [positionX, setPositionX] = useState(15)
   const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
@@ -25,6 +29,8 @@ const Block = ({ type="square" }:IBlockProps) => {
     deg: ''
   }
   const [options, setOptions] = useState<IOptions>(initialOptions)
+
+  const deleteMode = useSelector((state: RootState) => state.elementsReducer.deleteMode)
 
   const setSquareOptions = (options:IOptions) => {
     setOptions(options)
@@ -71,6 +77,7 @@ const Block = ({ type="square" }:IBlockProps) => {
         setIsOpenContextMenu(!isOpenContextMenu)
         return false
       }}
+      onClick={() => deleteElement(id)}
     >{typeMode ? 
       <textarea value={text} onChange={(e)=>setText(e.currentTarget.value)} /> 
       : 
