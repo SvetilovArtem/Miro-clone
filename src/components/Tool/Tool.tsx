@@ -16,8 +16,8 @@ const Tool = ({ tool, onClick, deleteMode }:IToolProps) => {
   }
   return (
     <div 
-      className={styles.tool} 
-      style={deleteMode && tool.name==='Delete' ? {backgroundColor: 'red'} : {backgroundColor: '#fff'}} 
+      className={deleteMode && tool.name==='Delete' ? styles.tool + ' ' + styles.active : styles.tool} 
+
       onClick={() => onClick(tool)}
       onMouseEnter={hiddenHandler}
       onMouseLeave={hiddenHandler}

@@ -7,9 +7,12 @@
     justify-content: center;
     position: relative;
     &:hover {
-        background-color: #ededed;
+        background-color: hwb(190 36% 0%);
     }
     &:active {
         transform: scale(0.95);
     }
+}
+.active {
+    background-color: hwb(211 34% 0%);
 }
