@@ -55,7 +55,14 @@ const ToolsPanel = ({ tools }:IToolsPanelProps) => {
       style={{position: 'absolute', top: positionY, left: positionX}}
       ref={toolsRef}
       >
-          {tools.map(tool => <Tool tool={tool} key={tool.id} deleteMode={deleteMode} onClick={() => onClickHandler({...tool, id: Math.floor(Math.random()*100 + Number(Date()))})} />)}
+          {tools.map(tool => 
+            <Tool 
+              tool={tool}  
+              key={tool.id} 
+              deleteMode={deleteMode} 
+              onClick={() => onClickHandler({...tool, id: Math.floor(Math.random()*100 + Number(Date()))})} 
+            />
+          )}
       </ul>}
     </>
   )

@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react'
 import styles from './Block.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import { IOptions } from '../../models/models'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/store'
 
 interface IBlockProps {
   type?: string
@@ -22,6 +20,8 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
   const [typeMode, setTypeMode] = useState(false)
   const [text, setText] = useState('')
 
+  console.log(blockRef.current?.getBoundingClientRect())
+
   const initialOptions = {
     width: '80',
     height: '80',
@@ -29,8 +29,6 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
     deg: ''
   }
   const [options, setOptions] = useState<IOptions>(initialOptions)
-
-  const deleteMode = useSelector((state: RootState) => state.elementsReducer.deleteMode)
 
   const setSquareOptions = (options:IOptions) => {
     setOptions(options)
@@ -45,9 +43,20 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
   }
   const dragEnd = (e:any) => {
     e.preventDefault()  
-    if(!blockRef.current?.clientWidth) return null
-    setPositionX(e.pageX - blockRef.current?.clientWidth / 2)
-    setPositionY(e.pageY - blockRef.current?.clientHeight / 2)  
+    // if(!blockRef.current?.clientWidth) return null
+
+    if(!getCoords().left || !getCoords().top) return null
+    console.log(getCoords())
+   
+
+    setPositionX(e.pageX)
+    setPositionY(e.pageY)  
+  }
+  const getCoords = () => {
+    return {
+      top: blockRef.current?.getBoundingClientRect().top,
+      left: blockRef.current?.getBoundingClientRect().left
+    }
   }
   return (
     <>
@@ -55,8 +64,8 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
       className={enter ? styles.square + ' ' + styles.lighter : styles.square}
       style={
         { 
-          top: positionY, 
-          left: positionX, 
+          top: `${positionY}px`, 
+          left: `${positionX}px`, 
           width: `${options.width}px`, 
           minHeight: `${options.height}px`,
           backgroundColor: options.bgColor,
