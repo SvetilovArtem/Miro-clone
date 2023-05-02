@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { DragEvent, useRef, useState } from 'react'
 import styles from './Block.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
 import { IOptions } from '../../models/models'
@@ -11,6 +11,7 @@ interface IBlockProps {
 
 const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
   const blockRef = useRef<HTMLDivElement | null>(null)
+
   const [positionX, setPositionX] = useState(15)
   const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
   const [enter, setEnter] = useState(false)
@@ -19,8 +20,6 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
 
   const [typeMode, setTypeMode] = useState(false)
   const [text, setText] = useState('')
-
-  console.log(blockRef.current?.getBoundingClientRect())
 
   const initialOptions = {
     width: '80',
@@ -35,33 +34,52 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
     setIsOpenContextMenu(false)
   }
 
-  const dragStart = () => {
-      if(!blockRef) return null 
-    }
+  const dragStart = (e:DragEvent) => {
+
+  }
   const dragOver = (e:any) => {
     e.preventDefault()
   }
-  const dragEnd = (e:any) => {
-    e.preventDefault()  
-    // if(!blockRef.current?.clientWidth) return null
+  const dragEnd = (e:DragEvent) => {
+    e.preventDefault() 
+    const blockRefClientRect = blockRef.current?.getBoundingClientRect()
 
-    if(!getCoords().left || !getCoords().top) return null
-    console.log(getCoords())
-   
+    if(!blockRefClientRect) return null
+    console.log(e.pageX-blockRefClientRect.left)
+    setPositionX(e.pageX - e.currentTarget.clientWidth / 2)
+    setPositionY(e.pageY - 61)  
+  }
 
-    setPositionX(e.pageX)
-    setPositionY(e.pageY)  
-  }
-  const getCoords = () => {
-    return {
-      top: blockRef.current?.getBoundingClientRect().top,
-      left: blockRef.current?.getBoundingClientRect().left
-    }
-  }
+  // const onBlockRefDown = (e: any) => {
+  //   moveAt(e)
+  //   console.log('mouse down')
+  //   document.onmousemove = function(e) {
+  //     moveAt(e)
+  //     console.log('mouse move')
+  //   }
+  // }
+
+  // function moveAt(e:any) {
+  //   const coords = getCoords()
+  //   if(!coords?.top || !coords.left) return null
+  //   let shiftX = e.pageX - coords.left
+  //   let shiftY = e.pageY - coords.top
+  //   setPositionX(e.pageX - shiftX)
+  //   setPositionY(e.pageY - shiftY) 
+  // }
+
+  // const getCoords = () => {
+  //   if(!blockRef.current) return null
+  //   const blockRefClientRect = blockRef.current?.getBoundingClientRect()
+  //   return {
+  //     top: blockRefClientRect.top,
+  //     left: blockRefClientRect.left
+  //   }
+  // }
   return (
     <>
     <div 
-      className={enter ? styles.square + ' ' + styles.lighter : styles.square}
+      className={styles.square}
       style={
         { 
           top: `${positionY}px`, 
@@ -77,9 +95,6 @@ const Block = ({ type="square", id, deleteElement }:IBlockProps) => {
       onDragOver={dragOver}
       onDragEnd={dragEnd}
       ref={blockRef}
-      onDragEnter={()=>setEnter(true)}
-      onDragLeave={()=>setEnter(false)}
-      onDrop={()=>{}}
       onDoubleClick={() => setTypeMode(!typeMode)}
       onContextMenu={e => {
         e.preventDefault()

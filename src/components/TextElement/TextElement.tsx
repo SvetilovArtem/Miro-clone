@@ -59,7 +59,8 @@ const TextElement = ({text, id, deleteElement}:ITextElementProps) => {
           top: positionY, 
           left: positionX, 
           color: options.bgColor, 
-          transform: `rotate(${options.deg}deg)`
+          transform: `rotate(${options.deg}deg)`,
+          width: `${options.width}px`
         }}
         draggable
         onDragStart={dragStart} 

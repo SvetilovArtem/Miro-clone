@@ -35,24 +35,21 @@ const Arrow = ({ id, deleteElement }:IArrowProps) => {
     e.preventDefault()
     }
     const dragEnd = (e:any) => {
-    e.preventDefault()  
-
-    if(!arrowRef.current?.clientWidth) return null
-
-    setPositionX(e.clientX - arrowRef.current.clientWidth / 2)
-    setPositionY(e.clientY - 200) 
+      e.preventDefault()  
+      setPositionX(e.pageX)
+      setPositionY(e.pageY) 
     }
   return (
     <>
-          <div 
-        className={styles.arrow}
-        style={
-          { 
-            top: positionY, 
-            left: positionX, 
-            width: `${options.width}px`, 
-            transform: `rotate(${options.deg}deg)`
-          }}
+        <div 
+      className={styles.arrow}
+      style={
+        { 
+          top: positionY, 
+          left: positionX, 
+          width: `${options.width}px`, 
+          transform: `rotate(${options.deg}deg)`
+        }}
         draggable
         onDragStart={dragStart} 
         onDragOver={dragOver}
@@ -60,14 +57,14 @@ const Arrow = ({ id, deleteElement }:IArrowProps) => {
         ref={arrowRef}
         onClick={() => deleteElement(id)}
     >
-        <div 
-          onContextMenu={e => {
-          e.preventDefault()
-          setIsOpenContextMenu(!isOpenContextMenu)
-          return false
-        }}
-        ></div>
-    </div>
+          <div 
+            onContextMenu={e => {
+            e.preventDefault()
+            setIsOpenContextMenu(!isOpenContextMenu)
+            return false
+          }}
+          ></div>
+        </div>
         {isOpenContextMenu && 
           <ContextMenu 
             setContextMenu={setIsOpenContextMenu} 
