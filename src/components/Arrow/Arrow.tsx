@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styles from './Arrow.module.scss'
 import ContextMenu from '../ContextMenu/ContextMenu'
-import { IOptions } from '../../models/models'
+import { useElementWithOptions } from '../../hooks/useElementWithOptions'
 
 interface IArrowProps {
   id: number
@@ -10,43 +10,26 @@ interface IArrowProps {
 
 const Arrow = ({ id, deleteElement }:IArrowProps) => {
     const arrowRef = useRef<HTMLDivElement | null>(null)
-    const [positionX, setPositionX] = useState(15)
-    const [positionY, setPositionY] = useState(window.innerHeight / 2 - 130)
 
     const [isOpenContextMenu, setIsOpenContextMenu] = useState(false)
 
-    const initialOptions = {
-      width: '200px',
-      height: '10px',
-      bgColor: '',
-      deg: ''
-    }
-    const [options, setOptions] = useState<IOptions>(initialOptions)
-
-    const setSquareOptions = (options:IOptions) => {
-      setOptions(options)
-      setIsOpenContextMenu(false)
-    }
-
-    const dragStart = () => {
-        if(!arrowRef) return null 
-      }
-    const dragOver = (e:any) => {
-    e.preventDefault()
-    }
-    const dragEnd = (e:any) => {
-      e.preventDefault()  
-      setPositionX(e.pageX)
-      setPositionY(e.pageY) 
-    }
+    const {
+      positionX,
+      positionY,
+      options,
+      setSquareOptions,
+      dragEnd,
+      dragOver,
+      dragStart
+    } = useElementWithOptions(arrowRef)
   return (
     <>
         <div 
       className={styles.arrow}
       style={
         { 
-          top: positionY, 
-          left: positionX, 
+          top: `${positionY}px`, 
+          left: `${positionX}px`, 
           width: `${options.width}px`, 
           transform: `rotate(${options.deg}deg)`
         }}
